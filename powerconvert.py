@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import os
 import subprocess
 import shutil
@@ -15,7 +16,7 @@ def pptx_to_pdf(input_path, output_path=None):
 
     libreoffice_cmd = find_libreoffice_command()
     if not libreoffice_cmd: 
-        print("❌ LibreOffice not found.  Please install it first.")
+        print("LibreOffice not found. Please install it first.")
         return
 
     # Set environment to avoid snap GPU issues
@@ -30,10 +31,10 @@ def pptx_to_pdf(input_path, output_path=None):
     ], capture_output=True, text=True, env=env)
 
     if result.returncode == 0 and os. path.exists(output_path):
-        print(f"✅ Converted successfully: {input_path} → {output_path}")
+        print(f"Converted successfully: {input_path} -> {output_path}")
     else:
-        print(f"❌ Conversion failed for: {input_path}")
-        print("🔍 LibreOffice output:\n", result.stderr or result.stdout)
+        print(f"Conversion failed for: {input_path}")
+        print("LibreOffice output:\n", result.stderr or result.stdout)
 
 def convert_all_pptx_in_folder(folder_path):
     for filename in os.listdir(folder_path):
@@ -45,16 +46,16 @@ if __name__ == "__main__":
     choice = input("Do you want to convert a (f)ile or a (d)irectory? [f/d]: ").strip().lower()
 
     if choice == "f": 
-        pptx_file = input("Enter the full path to the . pptx file: ").strip() or "/home/bedo/Downloads/10.pptx"
+        pptx_file = input("Enter the full path to the .pptx file: ").strip()
         if os.path.isfile(pptx_file) and pptx_file.lower().endswith(".pptx"):
             pptx_to_pdf(pptx_file)
         else:
-            print("❌ Invalid file path or not a .pptx file.")
+            print("Invalid file path or not a .pptx file.")
     elif choice == "d": 
-        folder = input("Enter the full directory path: ").strip() or "/home/bedo/Downloads"
+        folder = input("Enter the full directory path: ").strip()
         if os.path.isdir(folder):
             convert_all_pptx_in_folder(folder)
         else:
-            print("❌ Invalid directory path.")
+            print("Invalid directory path.")
     else:
-        print("❌ Invalid choice. Please enter 'f' or 'd'.")
+        print("Invalid choice. Please enter 'f' or 'd'.")
